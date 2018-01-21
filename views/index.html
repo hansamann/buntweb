@@ -97,6 +97,12 @@
         <li class="nav-item">
           <a class="nav-link" id="contact-tab" data-toggle="tab" href="#letterwipe" role="tab">Letter Wipe</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#random" role="tab">Random</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#randomLetter" role="tab">Random Letter</a>
+        </li>               
       </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="rainbow" role="tabpanel">
@@ -157,6 +163,24 @@
                 <button type="button" class="btn btn-primary btn-block" id="letterWipeStart">Start</button>
               </form>              
             </div>
+            <div class="tab-pane fade" id="random" role="tabpanel">
+              <form>
+                <br>
+                <input type="number" class="form-control" id="randomWait" min="1" max="255" value="50">
+                <small class="form-text text-muted">Smaller wait means faster animation.</small>
+                <br> 
+                <button type="button" class="btn btn-primary btn-block" id="randomStart">Start</button>
+              </form>              
+            </div>  
+            <div class="tab-pane fade" id="randomLetter" role="tabpanel">
+              <form>
+                <br>
+                <input type="number" class="form-control" id="randomLetterWait" min="1" max="255" value="50">
+                <small class="form-text text-muted">Smaller wait means faster animation.</small>
+                <br> 
+                <button type="button" class="btn btn-primary btn-block" id="randomLetterStart">Start</button>
+              </form>              
+            </div>                       
 
       </div>      
 
@@ -228,6 +252,16 @@
           var command = get04LetterWipeCommand(parseInt($('#letterWipeWait').val(), 10), colors);
           sendUpdate(command);
         }); 
+
+        $('#randomStart').click(function() {
+          var command = get05RandomCommand(parseInt($('#randomWait').val(), 10));
+          sendUpdate(command);
+        }); 
+
+        $('#randomLetterStart').click(function() {
+          var command = get06RandomLetterCommand(parseInt($('#randomLetterWait').val(), 10));
+          sendUpdate(command);
+        });                 
 
 
       });
@@ -308,6 +342,28 @@
 
         return hexString;
       }
+
+      function get05RandomCommand(wait)
+      {
+        var wait = Number(wait).toString(16);
+        wait = (wait.length == 1) ? "0" + wait : wait;
+
+        var hexString = "05";
+        hexString += wait;
+        return hexString;
+      }  
+
+      function get06RandomLetterCommand(wait)
+      {
+        var wait = Number(wait).toString(16);
+        wait = (wait.length == 1) ? "0" + wait : wait;
+
+        var hexString = "06";
+        hexString += wait;
+        return hexString;
+      }           
+
+
 
 
 

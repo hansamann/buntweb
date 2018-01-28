@@ -2,7 +2,8 @@ var fs = require('fs');
 
 function servePage(req, res)
 {
-	fs.readFile('views/index.html', 'utf8', function (err,data) {
+	var page = (req.query && req.query.page) ? req.query.page : 'index';
+	fs.readFile('views/'+page+'.html', 'utf8', function (err,data) {
 		if (err) {
 			return console.log(err);
 		}
@@ -25,7 +26,7 @@ exports.buntweb = function bunt(req, res) {
 	
 	switch (req.method) {
 	    case 'GET':
-	    servePage(req, res);
+	    	servePage(req, res);
 	      /*if (req.headers && req.headers['accept'] && req.headers['accept'].includes('html'))
 	      {
 	      	
